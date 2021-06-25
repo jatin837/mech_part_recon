@@ -34,35 +34,10 @@ class Imgs(object):
 def load_labels(labels_dir) -> dict:
     with open(labels_dir, 'r') as f:
         labels: dict = json.load(f)
-
-dat_dir: str = os.path.abspath("./dat/blnw-images-224")
-categories: list = os.listdir(dat_dir)
-
-_train: float = 0.75
-_total: float= 1.00
-train_imgs: dict = {}
-test_imgs: dict = {}
-
-for cat in categories:
-    train_imgs[cat] = []
-    test_imgs[cat] = []
-    imgs = os.listdir(f"{dat_dir}/{cat}") 
-    part = int(_train*len(imgs))
-    for img in imgs[:part]:
-        img_path = os.path.join(dat_dir, cat, img)
-        print(f'loading {img_path}')
-        img_to_dat = cv2.imread(img_path, 0)
-        img_obj = Img(os.path.abspath(img_path), cat, img_to_dat)
-        train_imgs[cat].append(img_obj)
-    for img in imgs[part:]:
-        img_path = os.path.join(dat_dir, cat, img)
-        print(f'loading {img_path}')
-        img_to_dat = cv2.imread(img_path, 0)
-        img_obj = Img(img_path, cat, img_to_dat)
-        test_imgs[cat].append(img_obj)
+    return labels
 
 #Creation of a CNN . Sequential Model
-def make_model(in_shape: tuple, kernel_size: tuple, num_of_filters:int) -> tf.keras.model.Sequential:
+def make_model(in_shape: tuple, kernel_size: tuple, num_of_filters:int) -> Sequential:
     model = Sequential()
     model.add(Conv2D(64, (3,3), input_shape=(224, 224, 1))) #input_shape matches our input image
     model.add(Activation('relu'))
@@ -74,11 +49,13 @@ def make_model(in_shape: tuple, kernel_size: tuple, num_of_filters:int) -> tf.ke
     model.add(Dense(64))
     model.add(Dense(4)) #data of four types
     model.add(Activation('softmax'))
-    model.compile(loss=keras.losses.categorical_crossentropy,
-                optimizer=keras.optimizers.Adam(),metrics=['accuracy'])
+    model.compile(
+        loss=keras.losses.categorical_crossentropy,
+        optimizer=keras.optimizers.Adam(),metrics=['accuracy']
+    )
     return model
 
-def fit_model(X_train: np.array, Y_train: np.array, X_test: np.array, Y_test: np.array, epoch: int, batch_size: int, model: tf.keras.model.Sequential) -> ():
+def fit_model(X_train: np.array, Y_train: np.array, X_test: np.array, Y_test: np.array, epoch: int, batch_size: int, model: Sequential) -> ():
     history = model.fit(X_train, Y_train, batch_size,
                         epochs,
                         validation_data=(X_test, Y_test)
@@ -87,6 +64,12 @@ def fit_model(X_train: np.array, Y_train: np.array, X_test: np.array, Y_test: np
 
 def main() -> ():
     labels_dir: str = os.path.abspath("./labels.json")
+    labels = load_labels(labels_dir)
+
+    dat_dir: str = os.path.abspath("./dat/blnw-images-224")
+    categories: list = os.listdir(dat_dir)
+
+    _train: float = 0.75
 
     ## model parameters
     in_shape: tuple = (224, 224, 1)
@@ -96,3 +79,18 @@ def main() -> ():
     #training hyper parameters
     epoch: int = 15
     batch_size: int = 64
+
+    imgs: Imgs = Imgs()
+    type(imgs)
+    for cat in categories:
+        imgs_list = os.listdir(f"{dat_dir}/{cat}")
+        for img in imgs_list:
+            img_path = os.path.join(dat_dir, cat, img)
+            print(f'{len(imgs)} - loading {img_path}')
+            img_to_dat = cv2.imread(img_path, 0)
+            img_obj = Img(img_path, cat, img_to_dat)
+            imgs + img_obj
+            print(imgs)
+
+if __name__ == "__main__":
+    main()
