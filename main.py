@@ -57,7 +57,6 @@ for cat in categories:
         img_obj = Img(img_path, cat, img_to_dat)
         test_imgs[cat].append(img_obj)
 
-
 #Creation of a CNN . Sequential Model
 def make_model(in_shape: tuple, kernel_size: tuple, num_of_filters:int) -> tf.keras.model.Sequential:
     model = Sequential()
@@ -74,3 +73,9 @@ def make_model(in_shape: tuple, kernel_size: tuple, num_of_filters:int) -> tf.ke
     model.compile(loss=keras.losses.categorical_crossentropy,
                 optimizer=keras.optimizers.Adam(),metrics=['accuracy'])
     return model
+
+def fit_model(X_train: np.array, Y_train: np.array, X_test: np.array, Y_test: np.array, epoch: int, batch_size: int, model: tf.keras.model.Sequential) -> ():
+    history = model.fit(X_train, Y_train, batch_size,
+                        epochs,
+                        validation_data=(X_test, Y_test)
+                    ) #Actual Training of model
