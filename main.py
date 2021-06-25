@@ -37,14 +37,14 @@ for cat in categories:
     part = int(_train*len(imgs))
     for img in imgs[:part]:
         img_path = os.path.join(dat_dir, cat, img)
-        print(img_path)
-        img_to_dat = cv2.imread(img_path)
+        print(f'loading {img_path}')
+        img_to_dat = cv2.imread(img_path, 0)
         img_obj = Img(os.path.abspath(img_path), cat, img_to_dat)
         train_imgs[cat].append(img_obj)
     for img in imgs[part:]:
         img_path = os.path.join(dat_dir, cat, img)
-        print(img_path)
-        img_to_dat = cv2.imread(img_path)
+        print(f'loading {img_path}')
+        img_to_dat = cv2.imread(img_path, 0)
         img_obj = Img(img_path, cat, img_to_dat)
         test_imgs[cat].append(img_obj)
 
