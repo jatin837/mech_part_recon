@@ -3,21 +3,11 @@ import json
 import cv2
 import tensorflow as tf
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.layers import Dense, Activation, Flatten, Conv2D, MaxPooling2D
-
-labels_dir: str = os.path.abspath("./labels.json")
-
-## model parameters
-in_shape: tuple = (224, 224, 1)
-num_of_filters: int = 64
-kernel_size: tuple = (3, 3)
-
-#training hyper parameters
-epoch: int = 15
-batch_size: int = 64
 
 class Img(object):
     def __init__(self, path: str, label: str, data: np.array):
@@ -28,8 +18,22 @@ class Img(object):
     def __repr__(self):
         return f"at {self.path}, {self.label}"
 
-with open(labels_dir, 'r') as f:
-    labels: dict = json.load(f)
+class Imgs(object):
+    def __init__(self):
+        self.imgs = []
+
+    def __add__(self, img):
+        self.imgs.append(img)
+
+    def __len__(self):
+        return len(self.imgs)
+
+    def __repr__(self):
+        return f"total images so far = {len(self)}"
+
+def load_labels(labels_dir) -> dict:
+    with open(labels_dir, 'r') as f:
+        labels: dict = json.load(f)
 
 dat_dir: str = os.path.abspath("./dat/blnw-images-224")
 categories: list = os.listdir(dat_dir)
@@ -79,3 +83,16 @@ def fit_model(X_train: np.array, Y_train: np.array, X_test: np.array, Y_test: np
                         epochs,
                         validation_data=(X_test, Y_test)
                     ) #Actual Training of model
+
+
+def main() -> ():
+    labels_dir: str = os.path.abspath("./labels.json")
+
+    ## model parameters
+    in_shape: tuple = (224, 224, 1)
+    num_of_filters: int = 64
+    kernel_size: tuple = (3, 3)
+
+    #training hyper parameters
+    epoch: int = 15
+    batch_size: int = 64
