@@ -1,14 +1,23 @@
 import os
 import json
 import cv2
-#import tensorflow as tf
+import tensorflow as tf
 import numpy as np
 
-#from tensorflow.keras.models import Sequential
-#from tensorflow.keras.utils import to_categorical
-#from tensorflow.keras.layers import Dense, Activation, Flatten, Conv2D, MaxPooling2D
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.layers import Dense, Activation, Flatten, Conv2D, MaxPooling2D
 
 labels_dir: str = os.path.abspath("./labels.json")
+
+## model parameters
+in_shape: tuple = (224, 224, 1)
+num_of_filters: int = 64
+kernel_size: tuple = (3, 3)
+
+#training hyper parameters
+epoch: int = 15
+batch_size: int = 64
 
 class Img(object):
     def __init__(self, path: str, label: str, data: np.array):
@@ -48,13 +57,20 @@ for cat in categories:
         img_obj = Img(img_path, cat, img_to_dat)
         test_imgs[cat].append(img_obj)
 
-#model:Sequential = Sequential()
 
-#model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(32, 32, 3)))
-#model.add(layers.MaxPooling2D((2, 2)))
-#model.add(layers.Conv2D(64, (3, 3), activation='relu'))
-#model.add(layers.MaxPooling2D((2, 2)))
-#model.add(layers.Conv2D(64, (3, 3), activation='relu'))
-#model.add(layers.Flatten())
-#model.add(layers.Dense(64, activation='relu'))
-#model.add(layers.Dense(10))
+#Creation of a CNN . Sequential Model
+def make_model(in_shape: tuple, kernel_size: tuple, num_of_filters:int) -> tf.keras.model.Sequential:
+    model = Sequential()
+    model.add(Conv2D(64, (3,3), input_shape=(224, 224, 1))) #input_shape matches our input image
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2,2)))
+    model.add(Conv2D(64, (3,3)))
+    model.add(Activation('relu'))
+    model.add(MaxPooling2D(pool_size=(2,2)))
+    model.add(Flatten())
+    model.add(Dense(64))
+    model.add(Dense(4)) #data of four types
+    model.add(Activation('softmax'))
+    model.compile(loss=keras.losses.categorical_crossentropy,
+                optimizer=keras.optimizers.Adam(),metrics=['accuracy'])
+    return model
