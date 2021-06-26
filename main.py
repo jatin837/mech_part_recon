@@ -62,7 +62,6 @@ def make_model(in_shape: tuple, kernel_size: tuple, num_of_filters:int) -> Seque
     return model
 
 def fit_model(X_train: np.array, Y_train: np.array,
-              X_test: np.array, Y_test: np.array,
               epoch: int, batch_size: int,
               model: Sequential) -> ():
     history = model.fit(
