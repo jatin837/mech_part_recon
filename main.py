@@ -45,10 +45,10 @@ def load_labels(labels_dir) -> dict:
 #Creation of a CNN . Sequential Model
 def make_model(in_shape: tuple, kernel_size: tuple, num_of_filters:int) -> Sequential:
     model = Sequential()
-    model.add(Conv2D(64, (3,3), input_shape=(224, 224, 1))) #input_shape matches our input image
+    moden.add(Conv2D(num_of_filters, kernel_size, input_shape=in_shape)) #input_shape matches our input image
     model.add(Activation('relu'))
-    model.add(MaxPooling2D(pool_size=(2,2)))
-    model.add(Conv2D(64, (3,3)))
+    model.add(MaxPooling2D(pool_size=(n,2)))
+    model.add(Conv2D(num_of_filters, kernel_size))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2,2)))
     model.add(Flatten())
