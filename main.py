@@ -98,5 +98,8 @@ def main() -> ():
             imgs + img_obj
             print(imgs)
 
+    data, labels = imgs.to_array()
+    X_train, Y_train, X_test, Y_test = train_test_split(data, labels, train_size = 0.75, random_state = 42)
+    print(X_train, Y_train, X_test, Y_test)
 if __name__ == "__main__":
     main()
