@@ -31,6 +31,12 @@ class Imgs(object):
     def __repr__(self):
         return f"total images so far = {len(self)}"
 
+    def to_array(self):
+        img_mat = np.array([img.data for img in self.imgs])
+        labels = np.array([img.label for img in self.imgs])
+        return img_mat, labels
+
+
 def load_labels(labels_dir) -> dict:
     with open(labels_dir, 'r') as f:
         labels: dict = json.load(f)
