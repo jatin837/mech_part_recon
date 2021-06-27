@@ -111,10 +111,15 @@ def main() -> ():
 
     import pdb; pdb.set_trace()
     data, labels = imgs.to_array()
-    X_train, X_test, Y_train, Y_test = train_test_split(data, labels, train_size = 0.75, random_state = 42)
+    X_train, X_test, Y_train, Y_test = train_test_split(
+            data, 
+            labels, 
+            train_size = 0.75, 
+            random_state = 42
+        )
     Y_train = to_categorical(Y_train)
     Y_test = to_categorical(Y_test)
-    print(X_train, Y_train, X_test, Y_test)
+    import pdb; pdb.set_trace()
     history = fit_model(X_train, Y_train,
                         X_test, Y_test,
                         epoch, batch_size,
