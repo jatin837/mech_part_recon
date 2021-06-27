@@ -119,6 +119,10 @@ def main() -> ():
             test_size = 0.25, 
             random_state = 42
         )
+
+    X_train = X_train/255 # suggested by tensorflow
+    X_test = X_test/255 # suggested by tensorflow
+
     Y_train = to_categorical(Y_train)
     Y_test = to_categorical(Y_test)
     import pdb; pdb.set_trace()
