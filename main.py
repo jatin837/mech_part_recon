@@ -6,7 +6,7 @@ import tensorflow as tf
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-from helper import *
+from helpers import *
 from this_model import *
 
 
@@ -62,5 +62,3 @@ def main() -> ():
                         epoch, batch_size,
                         model
                 )
-if __name__ == "__main__":
-    main()

@@ -1,4 +1,5 @@
 import os
+import numpy as np
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # To avoid tensorflow warning
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Activation, Flatten, Conv2D, MaxPooling2D

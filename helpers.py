@@ -1,4 +1,5 @@
 import json
+import numpy as np
 
 def load_labels(labels_dir) -> dict:
     with open(labels_dir, 'r') as f:
