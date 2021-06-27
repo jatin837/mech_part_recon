@@ -62,3 +62,6 @@ def main() -> ():
                         epoch, batch_size,
                         model
                 )
+
+if __name__ == "__main__":
+    main()
