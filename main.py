@@ -43,7 +43,7 @@ def main() -> ():
             img_obj = Img(img_path, labels[cat], img_to_dat)
             imgs + img_obj
             print(imgs)
-
+    breakpoint()
 
     data, labels = imgs.to_array()
     X_train, X_test, Y_train, Y_test = train_test_split(
