@@ -46,9 +46,9 @@ def load_labels(labels_dir) -> dict:
 #Creation of a CNN . Sequential Model
 def make_model(in_shape: tuple, kernel_size: tuple, num_of_filters:int) -> Sequential:
     model = Sequential()
-    moden.add(Conv2D(num_of_filters, kernel_size, input_shape=in_shape)) #input_shape matches our input image
+    model.add(Conv2D(num_of_filters, kernel_size, input_shape=in_shape)) #input_shape matches our input image
     model.add(Activation('relu'))
-    model.add(MaxPooling2D(pool_size=(n,2)))
+    model.add(MaxPooling2D(pool_size=(2,2)))
     model.add(Conv2D(num_of_filters, kernel_size))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2,2)))
@@ -57,21 +57,23 @@ def make_model(in_shape: tuple, kernel_size: tuple, num_of_filters:int) -> Seque
     model.add(Dense(4)) #data of four types
     model.add(Activation('softmax'))
     model.compile(
-        loss=keras.losses.categorical_crossentropy,
-        optimizer=keras.optimizers.Adam(),metrics=['accuracy']
+        loss=tf.keras.losses.categorical_crossentropy,
+        optimizer=tf.keras.optimizers.Adam(),metrics=['accuracy']
     )
     return model
 
 def fit_model(X_train: np.array, Y_train: np.array,
+              X_test: np.array, Y_test: np.array,
               epoch: int, batch_size: int,
               model: Sequential) -> ():
     history = model.fit(
         X_train,
         Y_train,
         batch_size,
-        epochs,
+        epoch,
         validation_data=(X_test, Y_test)
     )
+    return history
 
 
 def main() -> ():
@@ -92,6 +94,8 @@ def main() -> ():
     epoch: int = 15
     batch_size: int = 64
 
+    model = make_model(in_shape, kernel_size, num_of_filters)
+
     imgs: Imgs = Imgs()
     type(imgs)
     for cat in categories:
@@ -104,8 +108,15 @@ def main() -> ():
             imgs + img_obj
             print(imgs)
 
+
     data, labels = imgs.to_array()
     X_train, Y_train, X_test, Y_test = train_test_split(data, labels, train_size = 0.75, random_state = 42)
     print(X_train, Y_train, X_test, Y_test)
+    history = fit_model(X_train, Y_train,
+                        X_test, Y_test,
+                        epoch, batch_size,
+                        model
+                )
+    import ipdb; ipdb.set_trace()
 if __name__ == "__main__":
     main()
