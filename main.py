@@ -9,9 +9,6 @@ from sklearn.model_selection import train_test_split
 from helpers import *
 from this_model import *
 
-
-#Creation of a CNN . Sequential Model
-
 def main() -> ():
     labels_dir: str = os.path.abspath("./labels.json")
     labels = load_labels(labels_dir)
