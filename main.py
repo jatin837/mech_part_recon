@@ -109,14 +109,14 @@ def main() -> ():
             print(imgs)
 
 
+    import pdb; pdb.set_trace()
     data, labels = imgs.to_array()
-    X_train, Y_train, X_test, Y_test = train_test_split(data, labels, train_size = 0.75, random_state = 42)
+    X_train, X_test, Y_train, Y_test = train_test_split(data, labels, train_size = 0.75, random_state = 42)
     print(X_train, Y_train, X_test, Y_test)
     history = fit_model(X_train, Y_train,
                         X_test, Y_test,
                         epoch, batch_size,
                         model
                 )
-    import ipdb; ipdb.set_trace()
 if __name__ == "__main__":
     main()
