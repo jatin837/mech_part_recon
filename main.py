@@ -66,6 +66,7 @@ def fit_model(X_train: np.array, Y_train: np.array,
               X_test: np.array, Y_test: np.array,
               epoch: int, batch_size: int,
               model: Sequential) -> ():
+
     history = model.fit(
         X_train,
         Y_train,
@@ -115,6 +116,7 @@ def main() -> ():
             data, 
             labels, 
             train_size = 0.75, 
+            test_size = 0.25, 
             random_state = 42
         )
     Y_train = to_categorical(Y_train)
