@@ -2,3 +2,4 @@ dat
 **/*.swp*
 **/__pycache__
 env
+*.ipynp
