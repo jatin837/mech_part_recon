@@ -10,6 +10,11 @@ from helpers import *
 from this_model import *
 
 def main() -> ():
+    dump_file = os.path.abspath("./processed_data.json")
+    processed_data: dict = {
+        "data": [],
+        "labels": [],
+    }
     labels_dir: str = os.path.abspath("./labels.json")
     labels = load_labels(labels_dir)
 
@@ -37,9 +42,13 @@ def main() -> ():
             img_path = os.path.join(dat_dir, cat, img)
             print(f'{len(imgs)} - loading {img_path}')
             img_to_dat = cv2.imread(img_path, 0)/255.0
+            processed_data["data"].append(img_to_dat)
+            processed_data['labels'].append(labels[cat])
             img_obj = Img(img_path, labels[cat], img_to_dat)
             imgs + img_obj
             print(imgs)
+    with open(dump_file, 'w') as f:
+        json.dump(processed_data, f, indent = 2)
     breakpoint()
 
     data, labels = imgs.to_array()
