@@ -44,7 +44,7 @@ def main() -> ():
     labels_dir: str = os.path.abspath("./labels.json")
     labels = load_labels(labels_dir)
 
-    dat_dir: str = os.path.abspath("./dat/blnw-images-224")
+    dat_dir: str = os.path.abspath("./dat/resized_data")
     categories: list = os.listdir(dat_dir)
 
     _train: float = 0.75
