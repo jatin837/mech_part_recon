@@ -58,9 +58,11 @@ def main() -> ():
                         epoch, batch_size,
                         model
                 )
-    model_file = os.path.abspath("./model.npy")
+    history_file = os.path.abspath("./history.npy")
 
-    np.save(model_file ,history.history)
+    np.save(history_file ,history.history)
+    
+
 if __name__ == "__main__":
     main()
     print("EVERYTHING DONE")

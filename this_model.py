@@ -36,5 +36,6 @@ def fit_model(X_train: np.array, Y_train: np.array,
         epoch,
         validation_data=(X_test, Y_test)
     )
+    model.save("model.h5")
     return history
 
