@@ -3,3 +3,4 @@ dat
 **/__pycache__
 env
 *.ipynb
+*.npy

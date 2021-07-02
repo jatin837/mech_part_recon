@@ -1,34 +1,3 @@
-#import os
-#import cv2
-#import numpy as np
-#from helpers import load_labels
-#def main() -> ():
-#    labels_dir: str = os.path.abspath("./labels.json")
-#    labels = load_labels(labels_dir)
-
-#    dat_dir: str = os.path.abspath("./dat/blnw-images-224")
-#    categories: list = os.listdir(dat_dir)
-#    img_array = []
-#    labels_array = []
-#    img_array_file = os.path.abspath("./imgs.npy")
-#    img_labels_file = os.path.abspath("./labels.npy")
-#    for cat in categories:
-#        imgs_list = os.listdir(f"{dat_dir}/{cat}")
-#        for img in imgs_list:
-#            img_path = os.path.join(dat_dir, cat, img)
-#            print(f'loading {img_path}')
-#            img_to_dat = cv2.imread(img_path, 0)/255.0
-#            img_array.append(img_to_dat)
-#            labels_array.append(labels[cat])
-#    
-#    img_array = np.array(img_array)
-#    labels_array = np.array(labels_array)
-
-
-
-#if __name__ == "__main__":
-#    main()
-
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # To avoid tensorflow warning
 from tensorflow.keras.utils import to_categorical
@@ -84,12 +53,14 @@ def main() -> ():
 
     Y_train = to_categorical(Y_train)
     Y_test = to_categorical(Y_test)
-    breakpoint()
     history = fit_model(X_train, Y_train,
                         X_test, Y_test,
                         epoch, batch_size,
                         model
                 )
+    model_file = os.path.abspath("./model.npy")
 
+    np.save(model_file ,history.history)
 if __name__ == "__main__":
     main()
+    print("EVERYTHING DONE")
