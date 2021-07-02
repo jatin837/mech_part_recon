@@ -71,7 +71,6 @@ def main() -> ():
             img_obj = Img(img_path, labels[cat], img_to_dat)
             imgs + img_obj
             print(imgs)
-    breakpoint()
 
     data, labels = imgs.to_array()
     X_train, X_test, Y_train, Y_test = train_test_split(
@@ -85,6 +84,7 @@ def main() -> ():
 
     Y_train = to_categorical(Y_train)
     Y_test = to_categorical(Y_test)
+    breakpoint()
     history = fit_model(X_train, Y_train,
                         X_test, Y_test,
                         epoch, batch_size,
