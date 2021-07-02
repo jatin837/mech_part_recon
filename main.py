@@ -68,7 +68,7 @@ def main() -> ():
             img_path = os.path.join(dat_dir, cat, img)
             print(f'{len(imgs)} - loading {img_path}')
             img_to_dat = cv2.imread(img_path, 0)/255.0
-            img_obj = Img(img_path, labels[cat], img_to_dat)
+            img_obj = Img(img_path, labels[cat], img_to_dat.reshape(64, 64, 1))
             imgs + img_obj
             print(imgs)
 
