@@ -47,7 +47,7 @@ def main() -> ():
             labels, 
             train_size = 0.75, 
             test_size = 0.25, 
-            random_state = 42
+            random_state = 1
         )
 
 
