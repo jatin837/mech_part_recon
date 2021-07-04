@@ -2,13 +2,14 @@
 
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # To avoid tensorflow warning
+from helpers import *
 
 import tensorflow as tf
 
+from this_model import *
 import cv2
 import argparse
 import json
-from helpers import load_labels
 
 labels = load_labels("./labels.json")
 categories = list(labels.keys())
